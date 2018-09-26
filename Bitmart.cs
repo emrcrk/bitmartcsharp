@@ -13,6 +13,24 @@ using System.Threading.Tasks;
 
 namespace BitmartCSharp
 {
+	class JsonObjectSerialize
+    {
+        public static T ObjectSerialize<T>(string jsonString)
+        {
+            Newtonsoft.Json.JsonSerializer JsonSerializer = new Newtonsoft.Json.JsonSerializer { NullValueHandling = NullValueHandling.Ignore };
+
+       
+            using (var stringReader = new StringReader(jsonString))
+            {
+                using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(stringReader))
+                {
+                    var data = Newtonsoft.Json.JsonSerializer.Deserialize(jsonTextReader, typeof(T));
+                    return (T)data;
+                }
+            }
+        }
+    }
+	
     class BitmartWallet
     {
         [Newtonsoft.Json.JsonProperty("available")]
